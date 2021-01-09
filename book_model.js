@@ -29,9 +29,10 @@ const getBooks = () => {
       })
     })
   }
+
   const deleteBook = () => {
     return new Promise(function(resolve, reject) {
-      const id = parseInt(request.params.book_id)
+      const id = parseInt(request.params.id)
       pool.query('DELETE FROM booklist WHERE book_id = $1', [id], (error, results) => {
         if (error) {
           reject(error)
@@ -40,9 +41,22 @@ const getBooks = () => {
       })
     })
   }
+
+  const updateBook = () => {
+    return new Promise(function(resolve, reject) {
+      const id = parseInt(request.params.id)
+      pool.query('UPDATE FROM booklist WHERE book_id = $1', [id], (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        resolve(`Book updates with ID: ${id}`)
+      })
+    })
+  }
   
   module.exports = {
     getBooks,
     createBook,
     deleteBook,
+    updateBook
   }
