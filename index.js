@@ -1,11 +1,5 @@
 const express = require('express')
-const cors = require('cors')
 const app = express()
-
-app.use(cors({
-    credentials: true,
-}));
-
 const port = 3001
 
 const book_model = require('./book_model')
@@ -39,7 +33,7 @@ app.post('/books', (req, res) => {
 })
 
 app.delete('/books/:id', (req, res) => {
-  book_model.deleteBook(req.params.id)
+  book_model.deleteBook(req.params.book_id)
   .then(response => {
     res.status(200).send(response);
   })
@@ -48,6 +42,15 @@ app.delete('/books/:id', (req, res) => {
   })
 })
 
+app.put('/books/:id', (req, res) => {
+  book_model.updateBook(req.params.book_id, req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
